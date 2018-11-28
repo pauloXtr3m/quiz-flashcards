@@ -3,14 +3,20 @@ import styled from 'styled-components/native';
 
 const DeckTitle = styled.Text`
 	font-size: 40;
-	flex: 1;
-    justifyContent: 'center';
+`;
+
+const Deck = styled.View`
+  flex: 1;
+  alignItems: center;
+  justifyContent: center;  
 `;
 
 class DeckView extends React.Component {
-	render(){
+	render() {
 		return (
-			<DeckTitle>udacicards</DeckTitle>
+			<Deck>
+				<DeckTitle>udacicards</DeckTitle>
+			</Deck>
 		)
 	}
 }
