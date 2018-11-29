@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Content} from 'native-base';
+import { Container } from 'native-base';
+import { View } from 'react-native';
 import styled from "styled-components/native/dist/styled-components.native.esm";
 import DeckView from "./containers/DeckView";
 import AppHeader from "./components/AppHeader";
@@ -14,17 +15,35 @@ const ViewContent = styled.View`
   margin-bottom: 8;
 `;
 
-const QuizFlashCardsApp = () => {
-    return (
-		<Container style={{flex: 1}}>
-			<QuizStatusBar backgroundColor={blue} barStyle="light-content"/>
-			<AppHeader/>
-			<ViewContent>
-				<DeckView />
-			</ViewContent>
-		</Container>
-    );
-};
+class QuizFlashCardsApp extends React.Component {
+	state = {
+		fontLoaded: false,
+	};
+
+	async componentWillMount() {
+		await Expo.Font.loadAsync({
+			Roboto: require("native-base/Fonts/Roboto.ttf"),
+			Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+		});
+		this.setState({fontLoaded: true});
+	}
+
+	render(){
+		return (
+			<View style={{flex: 1}}>
+				{this.state.fontLoaded && (
+					<Container style={{flex: 1}}>
+						<QuizStatusBar backgroundColor={blue} barStyle="light-content"/>
+						<AppHeader/>
+						<ViewContent>
+							<DeckView />
+						</ViewContent>
+					</Container>
+				)}
+			</View>
+		);
+	}
+}
 
 export default QuizFlashCardsApp;
 
