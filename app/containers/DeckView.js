@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginTop: 48,
     },
     actionsDeck: {
 		marginTop: 24,

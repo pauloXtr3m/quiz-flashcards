@@ -2,10 +2,10 @@ import React from "react";
 import { Container } from 'native-base';
 import { View } from 'react-native';
 import styled from "styled-components/native/dist/styled-components.native.esm";
-import DeckView from "./containers/DeckView";
 import AppHeader from "./components/AppHeader";
 import QuizStatusBar from './components/QuizStatusBar';
 import {blue} from './utils/colors';
+import DecksListView from "./containers/DecksListView";
 
 const ViewContent = styled.View`
   flex: 1;
@@ -36,7 +36,7 @@ class QuizFlashCardsApp extends React.Component {
 						<QuizStatusBar backgroundColor={blue} barStyle="light-content"/>
 						<AppHeader/>
 						<ViewContent>
-							<DeckView />
+                            <DecksListView/>
 						</ViewContent>
 					</Container>
 				)}
