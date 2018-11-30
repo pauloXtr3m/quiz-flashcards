@@ -4,17 +4,6 @@ import { Button, Container } from 'native-base';
 import styled from 'styled-components'
 import {blue, white} from '../utils/colors';
 
-const DeckTitle = styled.Text`
-	font-size: 40;
-`;
-
-const CardsNumber = styled.Text`
-	font-size: 18;
-	color: grey;
-`;
-
-
-
 class DeckView extends React.Component {
 	render() {
 		// const { title, cardsNumber,  } = this.props;
@@ -24,10 +13,10 @@ class DeckView extends React.Component {
 					<CardsNumber>2 cards</CardsNumber>
 					<Container style={styles.actionsDeck}>
 						<Button primary style={styles.actionButton}>
-							<StartQuizText>Start quiz</StartQuizText>
+							<StartQuizText>Start a Quiz</StartQuizText>
 						</Button>
 						<Button bordered primary style={styles.actionButton}>
-							<AddCardText>Add card</AddCardText>
+							<AddCardText>Create New Question</AddCardText>
 						</Button>
 					</Container>
 
@@ -35,6 +24,16 @@ class DeckView extends React.Component {
 		)
 	}
 }
+
+const DeckTitle = styled.Text`
+	font-size: 40;
+`;
+
+const CardsNumber = styled.Text`
+	font-size: 18;
+	color: grey;
+`;
+
 const AddCardText = styled.Text`
      color: ${blue};
 `;
