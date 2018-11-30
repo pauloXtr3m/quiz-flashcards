@@ -2,47 +2,46 @@ import React from 'react';
 import * as MapUtils from '../utils/MapUtils';
 import styled from 'styled-components/native';
 
-import {StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {Container, List, ListItem, Body} from 'native-base';
+import * as Api from '../utils/api';
 
 class DecksListView extends React.Component {
 	state = {
-		decks: {
-			'fasqwerqwe': {
-				key: 'fasqwerqwe',
-				title: 'Math challenges',
-				cardsNumber: 4,
-			},
-			'1234asfaer': {
-				key: '1234asfaer',
-				title: 'Physics questions',
-				cardsNumber: 2,
-			},
-			'fer1312qwe': {
-				key: 'fer1312qwe',
-				title: 'English sentences',
-				cardsNumber: 5,
-			},
-		}
+		decks: {}
 	};
 
-	render() {
-		const decksArray = MapUtils.toArray(this.state.decks);
+	componentDidMount() {
+		Api.fetchDecks().then(decks => {
+			if(decks){
+				this.setState({decks});
+			}
+		});
+	}
 
-		return (
-			<Container style={styles.decksView}>
-				<List>
-					{decksArray.map(deck => (
-						<ListItem key={deck.key}>
-							<Body>
-							<DeckTitle>{deck.title}</DeckTitle>
-							<CardsNumber>{` ${deck.cardsNumber}	cards`}</CardsNumber>
-							</Body>
-						</ListItem>
-					))}
-				</List>
-			</Container>
-		);
+
+	render() {
+		const decksArray = this.state.decks && Object.keys(this.state.decks).length
+			? MapUtils.toArray(this.state.decks)
+			: null;
+
+		if(decksArray){
+			return (
+				<Container style={styles.decksView}>
+					<List>
+						{decksArray.map(deck => (
+							<ListItem key={deck.key}>
+								<Body>
+								<DeckTitle>{deck.title}</DeckTitle>
+								<CardsNumber>{`${deck.cardsNumber} cards`}</CardsNumber>
+								</Body>
+							</ListItem>
+						))}
+					</List>
+				</Container>
+			);
+		}
+		return <View></View>;
 	}
 
 }
