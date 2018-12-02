@@ -3,16 +3,18 @@ import * as MapUtils from '../../utils/MapUtils';
 import * as Api from '../../utils/api';
 
 import {View, Text, StyleSheet} from "react-native";
-import {Container, List, ListItem, Body} from 'native-base';
+import {Container, List, ListItem, Body, Fab} from 'native-base';
 import {CardsNumber, DeckTitle} from './styles';
+import {AppHeader} from '../../components/AppHeader';
 
-class DeckListView extends React.Component {
+export default class DeckListView extends React.Component {
 	state = {
+		isFabActive: true,
 		decks: {}
 	};
 
 	static navigationOptions = {
-		headerTitle: <Text>Testando</Text>,
+		headerTitle: <AppHeader title='Decks'/>,
 	};
 
 	componentDidMount() {
@@ -45,6 +47,7 @@ class DeckListView extends React.Component {
 							</ListItem>
 						))}
 					</List>
+
 				</Container>
 			);
 		}
@@ -57,6 +60,3 @@ export const styles = StyleSheet.create({
 		flex: 1,
 	},
 });
-
-
-export default DeckListView;

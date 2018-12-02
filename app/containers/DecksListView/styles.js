@@ -1,4 +1,4 @@
-import styled from 'styled-components/native/dist/styled-components.native.esm';
+import styled from 'styled-components/native';
 
 export const DeckTitle = styled.Text`
 	font-size: 18;

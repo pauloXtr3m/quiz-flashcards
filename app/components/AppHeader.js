@@ -1,20 +1,15 @@
-import {Body, Header, Left, Right, Title, } from "native-base";
 import React from "react";
+import styled from 'styled-components/native';
+import {white} from '../utils/colors';
 
-class AppHeader extends React.Component {
+const AppTitle = styled.Text`
+	font-size: 18;
+	margin-left: 12;
+	color: ${white};
+`;
 
-    render() {
-        return (
-            <Header>
-                <Left/>
-                <Body>
-                <Title> FlashCards </Title>
-                </Body>
-                <Right/>
-            </Header>
-        );
-    }
-}
-
-
-export default AppHeader;
+export const AppHeader = ({title}) => {
+	return (
+		<AppTitle>{ title }</AppTitle>
+	);
+};
