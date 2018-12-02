@@ -1,14 +1,18 @@
 import React from 'react';
-import * as MapUtils from '../utils/MapUtils';
-import styled from 'styled-components/native';
+import * as MapUtils from '../../utils/MapUtils';
+import * as Api from '../../utils/api';
 
-import {StyleSheet, View} from "react-native";
+import {View, Text, StyleSheet} from "react-native";
 import {Container, List, ListItem, Body} from 'native-base';
-import * as Api from '../utils/api';
+import {CardsNumber, DeckTitle} from './styles';
 
-class DecksListView extends React.Component {
+class DeckListView extends React.Component {
 	state = {
 		decks: {}
+	};
+
+	static navigationOptions = {
+		headerTitle: <Text>Testando</Text>,
 	};
 
 	componentDidMount() {
@@ -30,7 +34,10 @@ class DecksListView extends React.Component {
 				<Container style={styles.decksView}>
 					<List>
 						{decksArray.map(deck => (
-							<ListItem key={deck.key}>
+							<ListItem key={deck.key} button={true} onPress={() => this.props.navigation.navigate(
+								'DeckView',
+								{ key: deck.key, title:deck.title, cardsNumber: deck.cardsNumber }
+							)} >
 								<Body>
 								<DeckTitle>{deck.title}</DeckTitle>
 								<CardsNumber>{`${deck.cardsNumber} cards`}</CardsNumber>
@@ -43,22 +50,13 @@ class DecksListView extends React.Component {
 		}
 		return <View></View>;
 	}
-
 }
 
-const DeckTitle = styled.Text`
-	font-size: 18;
-`;
-
-const CardsNumber = styled.Text`
-	font-size: 12;
-	color: grey;
-`;
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 	decksView: {
 		flex: 1,
 	},
 });
 
-export default DecksListView;
+
+export default DeckListView;

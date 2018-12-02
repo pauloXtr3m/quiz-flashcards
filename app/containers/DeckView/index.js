@@ -1,55 +1,36 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { Button, Container } from 'native-base';
-import styled from 'styled-components'
-import {blue, white} from '../utils/colors';
+import { DeckTitle, CardsNumber, StartQuizText, AddCardText } from './styles';
+import {StyleSheet} from 'react-native';
 
 class DeckView extends React.Component {
 	render() {
-		// const { title, cardsNumber,  } = this.props;
+		const { title, cardsNumber } = this.props.navigation.state.params;
 		return (
 				<Container style={styles.deck}>
-					<DeckTitle>udacicards</DeckTitle>
-					<CardsNumber>2 cards</CardsNumber>
+					<DeckTitle>{title}</DeckTitle>
+					<CardsNumber>{`${cardsNumber} cards`}</CardsNumber>
 					<Container style={styles.actionsDeck}>
 						<Button primary style={styles.actionButton}>
 							<StartQuizText>Start a Quiz</StartQuizText>
 						</Button>
 						<Button bordered primary style={styles.actionButton}>
-							<AddCardText>Create New Question</AddCardText>
+							<AddCardText>New Question</AddCardText>
 						</Button>
 					</Container>
-
 				</Container>
 		)
 	}
 }
 
-const DeckTitle = styled.Text`
-	font-size: 40;
-`;
-
-const CardsNumber = styled.Text`
-	font-size: 18;
-	color: grey;
-`;
-
-const AddCardText = styled.Text`
-     color: ${blue};
-`;
-
-const StartQuizText = styled.Text`
-     color: ${white};
-`;
-
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
 	deck: {
 		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 		marginTop: 48,
-    },
-    actionsDeck: {
+	},
+	actionsDeck: {
 		marginTop: 24,
 		justifyContent: 'center',
 	},
