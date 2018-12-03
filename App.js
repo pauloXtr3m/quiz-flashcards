@@ -4,6 +4,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import DeckListView from './app/containers/DecksListView/index';
 import {purple, red, white} from './app/utils/colors';
 import DeckView from './app/containers/DeckView/index';
+import AddDeckView from './app/containers/AddDeckView';
 
 export default class App extends React.Component {
 	state = {
@@ -39,6 +40,15 @@ const AppNavigator = createStackNavigator({
 	},
 	DeckView: {
 		screen: DeckView,
+		navigationOptions: {
+			headerTintColor: white,
+			headerStyle: {
+				backgroundColor: red,
+			}
+		},
+	},
+	AddDeckView: {
+		screen: AddDeckView,
 		navigationOptions: {
 			headerTintColor: white,
 			headerStyle: {

@@ -3,7 +3,7 @@ import * as MapUtils from '../../utils/MapUtils';
 import * as Api from '../../utils/api';
 
 import {View, Text, StyleSheet} from "react-native";
-import {Container, List, ListItem, Body, Fab} from 'native-base';
+import {Container, List, ListItem, Body, Button, Icon} from 'native-base';
 import {CardsNumber, DeckTitle} from './styles';
 import {AppHeader} from '../../components/AppHeader';
 
@@ -34,6 +34,14 @@ export default class DeckListView extends React.Component {
 		if(decksArray){
 			return (
 				<Container style={styles.decksView}>
+					<Button block primary bordered onPress={() => this.props.navigation.navigate(
+						'AddDeckView',
+						{ }
+					)}>
+						<Icon name='add' />
+						<Text>Add deck</Text>
+					</Button>
+
 					<List>
 						{decksArray.map(deck => (
 							<ListItem key={deck.key} button={true} onPress={() => this.props.navigation.navigate(
@@ -47,7 +55,6 @@ export default class DeckListView extends React.Component {
 							</ListItem>
 						))}
 					</List>
-
 				</Container>
 			);
 		}
@@ -58,5 +65,6 @@ export default class DeckListView extends React.Component {
 export const styles = StyleSheet.create({
 	decksView: {
 		flex: 1,
+		margin: 16,
 	},
 });
