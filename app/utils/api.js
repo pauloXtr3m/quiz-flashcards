@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 
 const DECKS_STORAGE_KEY = 'QuizFlashCards:decks';
+const CARDS_STORAGE_KEY = 'QuizFlashCards:cards';
 
 export const fetchDecks = async () => {
 	try {
@@ -11,7 +12,13 @@ export const fetchDecks = async () => {
 	}
 };
 
-export function submitEntry ({ entry, key }) {
+export function addCard ({ entry, key }) {
+	return AsyncStorage.mergeItem(CARDS_STORAGE_KEY, JSON.stringify({
+		[key]: entry
+	}));
+}
+
+export function addDeck ({ entry, key }) {
 	return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
 		[key]: entry
 	}));

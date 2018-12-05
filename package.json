@@ -19,6 +19,7 @@
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
     "native-base": "^2.8.1",
+    "react-native-swipeout": "^2.3.6",
     "styled-components": "^4.1.1"
   }
 }

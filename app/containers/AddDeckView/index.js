@@ -29,7 +29,7 @@ export default class AddDeckView extends React.Component {
                 cardsNumber: 0,
             };
 
-            Api.submitEntry({entry, key});
+            Api.addDeck({entry, key});
             this.props.navigation.state.params.addDeck(entry);
             this.props.navigation.goBack();
         } else {
