@@ -19,6 +19,13 @@ export default class DeckView extends React.Component {
 		Animated.spring(height, {toValue: 80, speed: 7}).start();
 	}
 
+	goToQuizView = () => {
+        this.props.navigation.navigate(
+            'QuizView',
+            {}
+        )
+	};
+
 	render() {
 		const { opacity, height, width } = this.state;
 		const {title, cardsNumber} = this.props.navigation.state.params;
@@ -36,13 +43,13 @@ export default class DeckView extends React.Component {
 				</Animated.Text>
 				<Container style={styles.actionsDeck}>
 					<Animated.View style={animationButtons}>
-						<Button primary style={styles.actionButton}>
+						<Button primary style={styles.actionButton} onPress={this.goToQuizView}>
 							<StartQuizText>Start a Quiz</StartQuizText>
 						</Button>
 					</Animated.View>
 					<Animated.View style={animationButtons}>
 						<Button bordered primary style={styles.actionButton}>
-							<Animated.Text><AddCardText>New Question</AddCardText></Animated.Text>
+							<Animated.Text><AddCardText>New card</AddCardText></Animated.Text>
 						</Button>
 					</Animated.View>
 				</Container>

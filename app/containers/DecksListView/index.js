@@ -15,7 +15,8 @@ import {
 	Body,
 	Button,
 	Footer,
-	FooterTab
+	FooterTab,
+	Icon,
 } from 'native-base';
 
 export default class DeckListView extends React.Component {
@@ -43,9 +44,21 @@ export default class DeckListView extends React.Component {
 		this.setState({decks: newDecks});
 	};
 
+	deleteDeck = (deck) => {
+		const { decks } = this.state;
+
+		if(deck.key){
+            Api.deleteDeck(deck.key);
+
+            const newDecks = {...decks, [deck.key]: null};
+
+            this.setState({decks: newDecks});
+		}
+    };
+
 	goToAddDeckView = () => {
 		this.props.navigation.navigate(
-			'AddDeckView',
+			'AddCardView',
 			{addDeck: this.addDeck}
 		)
 	};
@@ -64,8 +77,8 @@ export default class DeckListView extends React.Component {
 			: null;
 
 		const swipeoutBtns = [
+			// editDeckButton,
 			deleteDeckButton,
-			editDeckButton,
 		];
 
 		if (decksArray) {
@@ -112,17 +125,15 @@ const AddDeckButton = ({ onPressFunction }) => (
 
 const deleteDeckButton = {
 	backgroundColor: red,
-	text: 'delete',
-	onPress: () => {
-	},
+	text: <Icon style={{color: 'white'}} active name="trash" />,
+	onPress: () => {},
 };
 
-const editDeckButton = {
-	backgroundColor: blue,
-	text: 'edit',
-	onPress: () => {
-	},
-};
+// const editDeckButton = {
+// 	backgroundColor: blue,
+// 	text: <Icon color={white} active name="edit" />,
+// 	onPress: () => {},
+// };
 
 export const styles = StyleSheet.create({
 	decksView: {

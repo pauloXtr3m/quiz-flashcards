@@ -24,7 +24,7 @@ export function addDeck ({ entry, key }) {
 	}));
 }
 
-export function removeEntry (key) {
+export function deleteDeck (key) {
 	return AsyncStorage.getItem(DECKS_STORAGE_KEY)
 		.then((results) => {
 			const data = JSON.parse(results);

@@ -5,6 +5,8 @@ import DeckListView from './app/containers/DecksListView/index';
 import {purple, red, white} from './app/utils/colors';
 import DeckView from './app/containers/DeckView/index';
 import AddDeckView from './app/containers/AddDeckView';
+import AddCardView from "./app/containers/AddCardView";
+import QuizView from "./app/containers/QuizView";
 
 export default class App extends React.Component {
 	state = {
@@ -55,7 +57,26 @@ const AppNavigator = createStackNavigator({
 				backgroundColor: red,
 			}
 		},
+	},
+    AddCardView: {
+        screen: AddCardView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: red,
+            }
+        },
+    },
+	QuizView: {
+        screen: QuizView,
+        navigationOptions: {
+            headerTintColor: white,
+            headerStyle: {
+                backgroundColor: red,
+            }
+        },
 	}
+
 });
 
 const AppContainer = createAppContainer(AppNavigator);
