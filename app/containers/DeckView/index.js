@@ -26,9 +26,16 @@ export default class DeckView extends React.Component {
         )
 	};
 
+    goToAddCardView = () => {
+        this.props.navigation.navigate(
+            'AddCardView',
+            {deckKey: this.props.key}
+        )
+    };
+
 	render() {
 		const { opacity, height, width } = this.state;
-		const {title, cardsNumber} = this.props.navigation.state.params;
+		const {key, title, cardsNumber} = this.props.navigation.state.params;
 
 		const animationTexts = {opacity};
 		const animationButtons = {opacity, height, width};
@@ -48,7 +55,7 @@ export default class DeckView extends React.Component {
 						</Button>
 					</Animated.View>
 					<Animated.View style={animationButtons}>
-						<Button bordered primary style={styles.actionButton}>
+						<Button bordered primary style={styles.actionButton} onPress={this.goToAddCardView}>
 							<Animated.Text><AddCardText>New card</AddCardText></Animated.Text>
 						</Button>
 					</Animated.View>

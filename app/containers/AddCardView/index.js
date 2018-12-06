@@ -19,14 +19,15 @@ export default class AddCardView extends React.Component {
 
     addCard = () => {
         const {title} = this.state;
+        const {deckKey} = this.state.navigation.params;
 
         if (title) {
             const key = Math.random().toString(36).substr(-8);
 
             const entry = {
+                deckKey,
                 key,
-                title: this.state.title,
-                cardsNumber: 0,
+                title,
             };
 
             Api.addCard({entry, key});
