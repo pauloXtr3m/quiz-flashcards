@@ -58,7 +58,7 @@ export default class DeckListView extends React.Component {
 
 	goToAddDeckView = () => {
 		this.props.navigation.navigate(
-			'AddCardView',
+			'AddDeckView',
 			{addDeck: this.addDeck}
 		)
 	};

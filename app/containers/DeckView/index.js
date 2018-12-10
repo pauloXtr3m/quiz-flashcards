@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Container} from 'native-base';
 import {DeckTitle, CardsNumber, StartQuizText, AddCardText} from './styles';
 import {StyleSheet, Animated} from 'react-native';
+import * as Api from '../../utils/api';
 
 export default class DeckView extends React.Component {
 	state = {
@@ -19,6 +20,11 @@ export default class DeckView extends React.Component {
 		Animated.spring(height, {toValue: 80, speed: 7}).start();
 	}
 
+	addCard = () => {
+	    const { key } = this.props.navigation.state.params;
+	  Api.increaseCardsNumber(key);
+    };
+
 	goToQuizView = () => {
         this.props.navigation.navigate(
             'QuizView',
@@ -27,15 +33,17 @@ export default class DeckView extends React.Component {
 	};
 
     goToAddCardView = () => {
+        const { deckKey } = this.props.navigation.state.params;
+
         this.props.navigation.navigate(
             'AddCardView',
-            {deckKey: this.props.key}
+            {deckKey, addCard: this.addCard}
         )
     };
 
 	render() {
 		const { opacity, height, width } = this.state;
-		const {key, title, cardsNumber} = this.props.navigation.state.params;
+		const { title, cardsNumber } = this.props.navigation.state.params;
 
 		const animationTexts = {opacity};
 		const animationButtons = {opacity, height, width};

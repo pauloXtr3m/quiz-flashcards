@@ -10,28 +10,31 @@ export default class AddCardView extends React.Component {
 
     state = {
         title: '',
+        question: '',
+        answer: '',
         error: false,
     };
 
     static navigationOptions = {
-        headerTitle: <AppHeader title='Add new deck'/>,
+        headerTitle: <AppHeader title='Add new card'/>,
     };
 
     addCard = () => {
-        const {title} = this.state;
-        const {deckKey} = this.state.navigation.params;
+        const { question, answer} = this.state;
+        const {deckKey} = this.props.navigation.state.params;
 
-        if (title) {
+        if (answer && answer) {
             const key = Math.random().toString(36).substr(-8);
 
             const entry = {
                 deckKey,
                 key,
-                title,
+                answer,
+                question,
             };
 
             Api.addCard({entry, key});
-            this.props.navigation.state.params.addCard(entry);
+            this.props.navigation.state.params.addCard();
             this.props.navigation.goBack();
         } else {
             this.setState({error: true});
@@ -44,15 +47,17 @@ export default class AddCardView extends React.Component {
         return (
             <Container style={{margin: 8}}>
                 {error && (
-                    <Text style={{color: red, fontSize: 18}}>Title cannot be empty</Text>
+                    <Text style={{color: red, fontSize: 18}}>Fields cannot be empty</Text>
                 )}
                 <Form>
-
                     <Item floatingLabel>
-                        <Label>Title</Label>
-                        <Input onChangeText={(title) => this.setState({title})} value={this.state.text}/>
+                        <Label>Question</Label>
+                        <Input onChangeText={(question) => this.setState({question})} value={this.state.questionText}/>
                     </Item>
-
+                    <Item floatingLabel>
+                        <Label>Answer</Label>
+                        <Input onChangeText={(answer) => this.setState({answer})} value={this.state.answerText}/>
+                    </Item>
                 </Form>
 
                 <Button block style={styles.actionButton} onPress={this.addCard}><Text>Add card</Text></Button>
