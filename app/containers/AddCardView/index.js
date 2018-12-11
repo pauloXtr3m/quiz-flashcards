@@ -21,7 +21,7 @@ export default class AddCardView extends React.Component {
 
     addCard = () => {
         const { question, answer} = this.state;
-        const {deckKey} = this.props.navigation.state.params;
+        const { deckKey, increaseCardsNumber } = this.props.navigation.state.params;
 
         if (answer && answer) {
             const key = Math.random().toString(36).substr(-8);
@@ -34,7 +34,7 @@ export default class AddCardView extends React.Component {
             };
 
             Api.addCard({entry, key});
-            this.props.navigation.state.params.addCard();
+            increaseCardsNumber();
             this.props.navigation.goBack();
         } else {
             this.setState({error: true});

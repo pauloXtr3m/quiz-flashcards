@@ -5,89 +5,100 @@ import {StyleSheet, Animated} from 'react-native';
 import * as Api from '../../utils/api';
 
 export default class DeckView extends React.Component {
-	state = {
-		height: new Animated.Value(0),
-		width: new Animated.Value(0),
-		opacity: new Animated.Value(0),
-	};
-
-	componentDidMount() {
-		const { opacity, width, height} = this.state;
-
-		Animated.timing(opacity, {duration: 500, toValue:1}).start();
-
-		Animated.spring(width, {toValue: 200, speed: 7}).start();
-		Animated.spring(height, {toValue: 80, speed: 7}).start();
-	}
-
-	addCard = () => {
-	    const { key } = this.props.navigation.state.params;
-	  Api.increaseCardsNumber(key);
+    state = {
+        height: new Animated.Value(0),
+        width: new Animated.Value(0),
+        opacity: new Animated.Value(0),
+        cardsNumber: 0,
     };
 
-	goToQuizView = () => {
+    componentWillMount(){
+        const { cardsNumber } = this.props.navigation.state.params;
+        this.setState({cardsNumber});
+    }
+
+    componentDidMount() {
+        const {opacity, width, height} = this.state;
+        Animated.timing(opacity, {duration: 500, toValue: 1}).start();
+
+        Animated.spring(width, {toValue: 200, speed: 7}).start();
+        Animated.spring(height, {toValue: 80, speed: 7}).start();
+    }
+
+    increaseCardsNumber = () => {
+        const {key, increaseCardsNumber } = this.props.navigation.state.params;
+        const { cardsNumber } = this.state;
+
+        Api.increaseCardsNumber(key);
+
+        increaseCardsNumber(key);
+
+        this.setState({cardsNumber: cardsNumber + 1});
+    };
+
+    goToQuizView = () => {
         this.props.navigation.navigate(
             'QuizView',
             {}
         )
-	};
+    };
 
     goToAddCardView = () => {
-        const { deckKey } = this.props.navigation.state.params;
+        const {deckKey} = this.props.navigation.state.params;
 
         this.props.navigation.navigate(
             'AddCardView',
-            {deckKey, addCard: this.addCard}
+            {deckKey, increaseCardsNumber: this.increaseCardsNumber}
         )
     };
 
-	render() {
-		const { opacity, height, width } = this.state;
-		const { title, cardsNumber } = this.props.navigation.state.params;
+    render() {
+        const {opacity, height, width, cardsNumber} = this.state;
+        const { title } = this.props.navigation.state.params;
 
-		const animationTexts = {opacity};
-		const animationButtons = {opacity, height, width};
+        const animationTexts = {opacity};
+        const animationButtons = {opacity, height, width};
 
-		return (
-			<Container style={styles.deck}>
-				<Animated.Text style={animationTexts}>
-					<DeckTitle>{title}</DeckTitle>
-				</Animated.Text>
-				<Animated.Text style={animationTexts}>
-					<CardsNumber>{`${cardsNumber} cards`}</CardsNumber>
-				</Animated.Text>
-				<Container style={styles.actionsDeck}>
-					<Animated.View style={animationButtons}>
-						<Button primary style={styles.actionButton} onPress={this.goToQuizView}>
-							<StartQuizText>Start a Quiz</StartQuizText>
-						</Button>
-					</Animated.View>
-					<Animated.View style={animationButtons}>
-						<Button bordered primary style={styles.actionButton} onPress={this.goToAddCardView}>
-							<Animated.Text><AddCardText>New card</AddCardText></Animated.Text>
-						</Button>
-					</Animated.View>
-				</Container>
-			</Container>
-		)
-	}
+        return (
+            <Container style={styles.deck}>
+                <Animated.Text style={animationTexts}>
+                    <DeckTitle>{title}</DeckTitle>
+                </Animated.Text>
+                <Animated.Text style={animationTexts}>
+                    <CardsNumber>{`${cardsNumber} cards`}</CardsNumber>
+                </Animated.Text>
+                <Container style={styles.actionsDeck}>
+                    <Animated.View style={animationButtons}>
+                        <Button primary style={styles.actionButton} onPress={this.goToQuizView}>
+                            <StartQuizText>Start a Quiz</StartQuizText>
+                        </Button>
+                    </Animated.View>
+                    <Animated.View style={animationButtons}>
+                        <Button bordered primary style={styles.actionButton} onPress={this.goToAddCardView}>
+                            <Animated.Text><AddCardText>New card</AddCardText></Animated.Text>
+                        </Button>
+                    </Animated.View>
+                </Container>
+            </Container>
+        )
+    }
 }
 
 export const styles = StyleSheet.create({
-	deck: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginTop: 48,
-	},
-	actionsDeck: {
-		marginTop: 24,
-		justifyContent: 'center',
-	},
-	actionButton: {
-		marginTop: 24,
-		padding: 48,
-		height: 50,
-		width: 200,
-	}
+    deck: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 48,
+    },
+    actionsDeck: {
+        marginTop: 24,
+        justifyContent: 'center',
+    },
+    actionButton: {
+        marginTop: 24,
+        padding: 48,
+        height: 50,
+        width: 200,
+    }
 });

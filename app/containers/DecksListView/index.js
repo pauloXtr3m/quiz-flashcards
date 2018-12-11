@@ -37,6 +37,14 @@ export default class DeckListView extends React.Component {
 		});
 	}
 
+	increaseCardsNumber = (deckKey) => {
+		const { decks } = this.state;
+
+		decks[deckKey].cardsNumber = decks[deckKey].cardsNumber + 1;
+
+		this.setState({decks});
+	};
+
 	addDeck = (deck) => {
 		const {decks} = this.state;
 		const newDecks = {...decks, [deck.key]: deck};
@@ -64,9 +72,12 @@ export default class DeckListView extends React.Component {
 	};
 
 	goToDeckDetailView = deck => () => {
+		const { key, title, cardsNumber } = deck;
+		const { increaseCardsNumber } = this;
+
 		this.props.navigation.navigate(
 			'DeckView',
-			{key: deck.key, title: deck.title, cardsNumber: deck.cardsNumber}
+			{key, title, cardsNumber, increaseCardsNumber}
 		)
 	};
 
