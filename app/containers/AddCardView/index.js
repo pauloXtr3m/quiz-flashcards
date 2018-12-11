@@ -45,11 +45,11 @@ export default class AddCardView extends React.Component {
         const {error} = this.state;
 
         return (
-            <Container style={{margin: 8}}>
+            <Container style={styles.container}>
                 {error && (
                     <Text style={{color: red, fontSize: 18}}>Fields cannot be empty</Text>
                 )}
-                <Form>
+                <Form style={styles.formContainer}>
                     <Item floatingLabel>
                         <Label>Question</Label>
                         <Input onChangeText={(question) => this.setState({question})} value={this.state.questionText}/>
@@ -60,21 +60,31 @@ export default class AddCardView extends React.Component {
                     </Item>
                 </Form>
 
-                <Button block style={styles.actionButton} onPress={this.addCard}><Text>Add card</Text></Button>
-                <Button bordered block style={styles.actionButton}
-                        onPress={() => this.props.navigation.goBack()}>
-                    <Text>Cancel</Text>
-                </Button>
+                <Container style={styles.actionButtonsContainer}>
+                    <Button block onPress={this.addCard} style={styles.actionButton}><Text>Add card</Text></Button>
+                    <Button bordered block
+                            onPress={() => this.props.navigation.goBack()} style={styles.actionButton}>
+                        <Text>Cancel</Text>
+                    </Button>
+                </Container>
+
             </Container>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        margin: 16,
+    },
+    formContainer: {
+        justifyContent: 'flex-end',
+    },
+    actionButtonsContainer: {
+        justifyContent: 'center',
+    },
     actionButton: {
         marginTop: 24,
-        padding: 48,
-        height: 50,
-        width: 200,
     }
 });

@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native'
-import {View, Text, StyleSheet, Animated} from 'react-native';
+import {View, Text, StyleSheet, Animated, Dimensions} from 'react-native';
 import {Card, CardItem} from 'native-base'
 import {white} from '../utils/colors';
-
 
 const Question = styled.Text`
 	font-size: 24
@@ -74,7 +73,7 @@ class QuizCard extends React.Component {
 			<View style={styles.container}>
 				<View>
 					<Animated.View style={[styles.flipCard, frontAnimatedStyle, {opacity: this.frontOpacity}]}>
-						<Card>
+						<Card style={styles.card}>
 							<CardItem header>
 								<Text>Question</Text>
 							</CardItem>
@@ -91,7 +90,7 @@ class QuizCard extends React.Component {
 
 					<Animated.View
 						style={[styles.flipCard, styles.flipCardBack, backAnimatedStyle, {opacity: this.backOpacity}]}>
-						<Card>
+						<Card style={styles.card}>
 							<CardItem header>
 								<Text>Answer</Text>
 							</CardItem>
@@ -117,10 +116,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	card : {
+		width: Dimensions.get('window').width * 0.9,
+	},
 	cardBody: {
 		paddingTop: 16,
 		paddingBottom: 120,
-		// elevation: 3,
 	},
 	flipCard: {
 		alignItems: 'center',
@@ -131,12 +132,6 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 	},
-	flipText: {
-		width: 90,
-		fontSize: 20,
-		color: 'white',
-		fontWeight: 'bold',
-	}
 });
 
 export default QuizCard;

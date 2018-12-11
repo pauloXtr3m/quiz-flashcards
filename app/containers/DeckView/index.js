@@ -37,9 +37,10 @@ export default class DeckView extends React.Component {
     };
 
     goToQuizView = () => {
+        const {deckKey} = this.props.navigation.state.params;
         this.props.navigation.navigate(
             'QuizView',
-            {}
+            {deckKey}
         )
     };
 
