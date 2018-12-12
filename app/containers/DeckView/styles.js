@@ -12,10 +12,35 @@ export const CardsNumber = styled.Text`
 
 export const AddCardText = styled.Text`
      color: ${blue};
-     justify-content: center;
+     padding: 0 16px 0 16px;
 `;
 
 export const StartQuizText = styled.Text`
      color: ${white};
-     justify-content: center;
+     padding: 0 16px 0 16px;
+`;
+
+export const DeckContainer = styled.View`
+	flex: 3;
+	flex-direction: column;
+	justify-content: space-around;
+	margin: 16px 16px 16px 16px;
+`;
+
+export const DeckTitleContainer = styled.View`
+	flex: 2;
+	align-items: center;
+	justify-content: center;
+`;
+
+export const DeckActionsContainer = styled.View`
+	flex: 1;
+	justify-content: flex-end;
+`;
+
+export const DeckActionsRow = styled.View`
+	flex: 1;
+	flex-direction: row;
+	align-items: flex-end
+	justify-content: space-between;
 `;

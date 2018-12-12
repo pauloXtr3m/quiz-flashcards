@@ -1,12 +1,13 @@
 import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
-import {Container, Button, DeckSwiper} from 'native-base';
+import { Button, DeckSwiper} from 'native-base';
 import {green, red, white} from "../../utils/colors";
 import QuizCard from '../../components/QuizCard';
 import {FlipCardButton} from './FlipCardButton';
 
 import * as ArrayUtils from "../../utils/ArrayUtils";
 import * as Api from "../../utils/api";
+import {CardsContainer} from './styles';
 
 export default class QuizView extends React.Component {
 
@@ -73,7 +74,7 @@ export default class QuizView extends React.Component {
         }
 
         return (
-            <Container style={styles.cardContainer}>
+            <CardsContainer>
                 <View>
                     <DeckSwiper
                         dataSource={cards}
@@ -81,12 +82,12 @@ export default class QuizView extends React.Component {
                         renderItem={item =>
                             <QuizCard {...item} numberOfCards={cards.length} ref={(card) => this._quizCard = card}/>
                         }
-                        onSwipeRight={item => {
+                        onSwipeRight={() => {
                             this._btnFlip.swipedCard();
                             this.increaseScore();
                         }}
 
-                        onSwipeLeft={item => {
+                        onSwipeLeft={() => {
                             this._btnFlip.swipedCard();
                         }}
                         renderEmpty={() => {
@@ -117,17 +118,12 @@ export default class QuizView extends React.Component {
                 <FlipCardButton flipCard={() => {
                     this._quizCard.flipCard()
                 }} ref={(btn) => this._btnFlip = btn}/>
-            </Container>
+            </CardsContainer>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        flex: 1,
-        margin: 16,
-        justifyContent: 'space-around',
-    },
     actionsCard: {
         flexDirection: 'row',
         justifyContent: 'space-around',
