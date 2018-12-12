@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { Root } from 'native-base';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import DeckListView from './app/containers/DecksListView/index';
-import {purple, red, white} from './app/utils/colors';
+import { red, white} from './app/utils/colors';
 import DeckView from './app/containers/DeckView/index';
 import AddDeckView from './app/containers/AddDeckView';
 import AddCardView from "./app/containers/AddCardView";
 import QuizView from "./app/containers/QuizView";
+import ScoreView from './app/containers/ScoreView';
+import * as NotificationUtils from './app/utils/Notification';
 
 export default class App extends React.Component {
 	state = {
@@ -21,9 +24,13 @@ export default class App extends React.Component {
 		this.setState({fontLoaded: true});
 	}
 
+	componentDidMount() {
+		NotificationUtils.setLocalNotification();
+	}
+
   render() {
 	if(this.state.fontLoaded){
-		return <AppContainer />
+        return <Root> <AppContainer /> </Root>
     }
 
     return(<View><Text>Loading</Text></View>);
@@ -36,7 +43,7 @@ const AppNavigator = createStackNavigator({
 		navigationOptions: {
 			headerTintColor: white,
 			headerStyle: {
-				backgroundColor: purple,
+				backgroundColor: red,
 			}
 		},
 	},
@@ -75,8 +82,16 @@ const AppNavigator = createStackNavigator({
                 backgroundColor: red,
             }
         },
-	}
-
+	},
+	ScoreView: {
+		screen: ScoreView,
+		navigationOptions: {
+			headerTintColor: white,
+			headerStyle: {
+				backgroundColor: red,
+			}
+		},
+	},
 });
 
 const AppContainer = createAppContainer(AppNavigator);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Item, Input, Label, Button, Text } from 'native-base';
 import {AppHeader} from '../../components/AppHeader';
-import * as Api from '../../utils/api';
+import * as Api from '../../utils/Api';
 import {blue, red, white} from "../../utils/colors";
 import {AddContentContainer, FormActionsContainer, FormActionsLine, FormContainer} from '../Forms/styles';
 
@@ -27,6 +27,7 @@ export default class AddDeckView extends React.Component {
 				key,
 				title: this.state.title,
 				cardsNumber: 0,
+				bestScore: 0,
 			};
 
 			Api.addDeck({entry, key});

@@ -17,7 +17,7 @@ export class FlipCardButton extends React.Component {
 
 		flipCard();
 		this.setState({flipped: !flipped});
-	}
+	};
 
 	render() {
 		let {flipped} = this.state;
@@ -26,13 +26,13 @@ export class FlipCardButton extends React.Component {
 		return (
 			<View>
 				{!flipped && (
-					<Button block style={{backgroundColor: blue}} onPress={this.updateButtonText(flipCard)}>
+					<Button rounded block style={{backgroundColor: blue}} onPress={this.updateButtonText(flipCard)}>
 						<Text style={{color: white}}>Show answer</Text>
 					</Button>
 				)}
 
 				{flipped && (
-					<Button block bordered onPress={this.updateButtonText(flipCard)}>
+					<Button rounded block bordered onPress={this.updateButtonText(flipCard)}>
 						<Text style={{color: blue}}>Back to question</Text>
 					</Button>
 				)}
@@ -40,7 +40,4 @@ export class FlipCardButton extends React.Component {
 		)
 	}
 }
-// const styles = StyleSheet.create({
-//
-// });
 

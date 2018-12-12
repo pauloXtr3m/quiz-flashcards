@@ -29,6 +29,23 @@ export function addDeck ({ entry, key }) {
 	}));
 }
 
+export function updateBestScore({ key, score }){
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then((results) => {
+            const data = JSON.parse(results);
+
+            const lastBestScore = data[key].bestScore
+                ? data[key].bestScore
+                : 0;
+
+            data[key].bestScore = lastBestScore < score
+                ? score
+                : lastBestScore;
+
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        })
+}
+
 export function increaseCardsNumber(key) {
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
         .then((results) => {

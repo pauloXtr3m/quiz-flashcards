@@ -1,153 +1,130 @@
 import React from 'react';
 import * as MapUtils from '../../utils/MapUtils';
-import * as Api from '../../utils/api';
+import * as Api from '../../utils/Api';
 
-import Swipeout from 'react-native-swipeout';
-import {View, Text, StyleSheet} from "react-native";
-import {CardsNumber, DeckTitle, NoDecksMessage} from './styles';
+import {StyleSheet,} from "react-native";
+import {CardsNumber, DeckTitle, NoDecksContainer, NoDecksMessage} from './styles';
 import {AppHeader} from '../../components/AppHeader';
-import {blue, orange, pink, purple, red, white} from "../../utils/colors";
 import {
-	Container,
-	Content,
-	List,
-	ListItem,
-	Body,
-	Button,
-	Footer,
-	FooterTab,
-	Icon,
+    Container,
+    Content,
+    List,
+    ListItem,
+    Body,
+    Footer,
 } from 'native-base';
+import {AddDeckButton} from './AddDeckButton';
 
 export default class DeckListView extends React.Component {
-	state = {
-		isFabActive: true,
-		decks: {}
-	};
-
-	static navigationOptions = {
-		headerTitle: <AppHeader title='Decks'/>,
-	};
-
-	componentDidMount() {
-		Api.fetchDecks().then(decks => {
-			if (decks) {
-				this.setState({decks});
-			}
-		});
-	}
-
-	increaseCardsNumber = (deckKey) => {
-		const { decks } = this.state;
-
-		decks[deckKey].cardsNumber = decks[deckKey].cardsNumber + 1;
-
-		this.setState({decks});
-	};
-
-	addDeck = (deck) => {
-		const {decks} = this.state;
-		const newDecks = {...decks, [deck.key]: deck};
-
-		this.setState({decks: newDecks});
-	};
-
-	deleteDeck = (deck) => {
-		const { decks } = this.state;
-
-		if(deck.key){
-            Api.deleteDeck(deck.key);
-
-            const newDecks = {...decks, [deck.key]: null};
-
-            this.setState({decks: newDecks});
-		}
+    state = {
+        isFabActive: true,
+        decks: {}
     };
 
-	goToAddDeckView = () => {
-		this.props.navigation.navigate(
-			'AddDeckView',
-			{addDeck: this.addDeck}
-		)
-	};
+    static navigationOptions = {
+        headerTitle: <AppHeader title='Decks'/>,
+    };
 
-	goToDeckDetailView = deck => () => {
-		const { key, title, cardsNumber } = deck;
-		const { increaseCardsNumber } = this;
+    componentDidMount() {
+        Api.fetchDecks().then(decks => {
+            if (decks) {
+                this.setState({decks});
+            }
+        });
+    }
 
-		this.props.navigation.navigate(
-			'DeckView',
-			{key, title, cardsNumber, increaseCardsNumber}
-		)
-	};
+    shouldComponentUpdate() {
+        let shouldComponentUpdate = true;
+        try {
+            const {scoreUpdated} = this.props.navigation.state.params;
+
+            shouldComponentUpdate = !!scoreUpdated;
+        } catch (e) {
+            shouldComponentUpdate = true;
+        }
+
+        return shouldComponentUpdate;
+    }
+
+    componentWillUpdate() {
+        Api.fetchDecks().then(decks => {
+            if (decks) {
+                this.setState({decks});
+            }
+        });
+    }
+
+    increaseCardsNumber = (deckKey) => {
+        const {decks} = this.state;
+
+        decks[deckKey].cardsNumber = decks[deckKey].cardsNumber + 1;
+
+        this.setState({decks});
+    };
+
+    addDeck = (deck) => {
+        const {decks} = this.state;
+        const newDecks = {...decks, [deck.key]: deck};
+
+        this.setState({decks: newDecks});
+    };
+
+    goToAddDeckView = () => {
+        this.props.navigation.navigate(
+            'AddDeckView',
+            {addDeck: this.addDeck}
+        )
+    };
+
+    goToDeckDetailView = deck => () => {
+        const {increaseCardsNumber} = this;
+
+        this.props.navigation.navigate(
+            'DeckView',
+            {...deck, increaseCardsNumber}
+        )
+    };
 
 
-	render() {
-		const decksArray = this.state.decks && Object.keys(this.state.decks).length
-			? MapUtils.toArray(this.state.decks)
-			: null;
+    render() {
+        const decksArray = this.state.decks && Object.keys(this.state.decks).length
+            ? MapUtils.toArray(this.state.decks)
+            : null;
 
-		const swipeoutBtns = [
-			// editDeckButton,
-			deleteDeckButton,
-		];
-
-		if (decksArray) {
-			return (
-				<Container style={styles.decksView}>
-					<Content>
-						<List>
-							{decksArray.map(deck => (
-								<Swipeout key={deck.key} backgroundColor={white} right={swipeoutBtns}>
-									<ListItem button={true} onPress={this.goToDeckDetailView(deck)}>
-										<Body>
-										<DeckTitle>{deck.title}</DeckTitle>
-										<CardsNumber>{`${deck.cardsNumber} cards`}</CardsNumber>
-										</Body>
-									</ListItem>
-								</Swipeout>
-							))}
-						</List>
-					</Content>
-					<Footer>
-						<AddDeckButton onPressFunction={this.goToAddDeckView} />
-					</Footer>
-				</Container>
-			);
-		}
-		return <Container style={styles.decksView}>
-			<Content>
-				<NoDecksMessage>There are no decks to show</NoDecksMessage>
-			</Content>
-			<Footer>
-				<AddDeckButton onPressFunction={this.goToAddDeckView} />
-			</Footer>
-		</Container>;
-	}
+        if (decksArray) {
+            return (
+                <Container style={styles.decksView}>
+                    <Content>
+                        <List>
+                            {decksArray.map(deck => (
+                                    <ListItem key={deck.key} button={true} onPress={this.goToDeckDetailView(deck)}>
+                                        <Body>
+                                        <DeckTitle>{deck.title}</DeckTitle>
+                                        <CardsNumber>{`${deck.cardsNumber} cards`}</CardsNumber>
+                                        </Body>
+                                    </ListItem>
+                            ))}
+                        </List>
+                    </Content>
+                    <Footer>
+                        <AddDeckButton onPressFunction={this.goToAddDeckView}/>
+                    </Footer>
+                </Container>
+            );
+        }
+        return <Container style={{flex: 1}}>
+            <NoDecksContainer>
+                <NoDecksMessage>There are no decks to show</NoDecksMessage>
+            </NoDecksContainer>
+            <Footer>
+                <AddDeckButton onPressFunction={this.goToAddDeckView}/>
+            </Footer>
+        </Container>;
+    }
 }
 
-const AddDeckButton = ({ onPressFunction }) => (
-	<FooterTab style={{backgroundColor: orange}}>
-		<Button full onPress={ onPressFunction }>
-			<Text style={{color: white, fontSize: 18}}>ADD DECK</Text>
-		</Button>
-	</FooterTab>
-);
-
-const deleteDeckButton = {
-	backgroundColor: red,
-	text: <Icon style={{color: 'white'}} active name="trash" />,
-	onPress: () => {},
-};
-
-// const editDeckButton = {
-// 	backgroundColor: blue,
-// 	text: <Icon color={white} active name="edit" />,
-// 	onPress: () => {},
-// };
-
 export const styles = StyleSheet.create({
-	decksView: {
-		flex: 1,
-	},
+    decksView: {
+        flex: 1,
+    },
 });

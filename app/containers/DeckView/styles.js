@@ -1,8 +1,17 @@
 import styled from 'styled-components/native';
-import {blue, white} from '../../utils/colors';
+import {blue, purple, white} from '../../utils/colors';
 
 export const DeckTitle = styled.Text`
 	font-size: 36;
+`;
+
+export const ScoreText = styled.Text`
+    color: ${purple};
+	font-size: 36;
+`;
+
+export const ScoreDescription = styled.Text`
+	font-size: 20;
 `;
 
 export const CardsNumber = styled.Text`
@@ -28,7 +37,13 @@ export const DeckContainer = styled.View`
 `;
 
 export const DeckTitleContainer = styled.View`
-	flex: 2;
+	flex: 1;
+	align-items: center;
+	justify-content: center;
+`;
+
+export const DeckScoreContainer = styled.View`
+	flex: 1;
 	align-items: center;
 	justify-content: center;
 `;
@@ -41,6 +56,6 @@ export const DeckActionsContainer = styled.View`
 export const DeckActionsRow = styled.View`
 	flex: 1;
 	flex-direction: row;
-	align-items: flex-end
+	align-items: flex-end;
 	justify-content: space-between;
 `;
