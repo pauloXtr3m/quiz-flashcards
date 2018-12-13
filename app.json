@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "quiz-flashcards",
-    "description": "This project is really great.",
+    "description": "Quiz app where you can add decks and cards with questions to answer",
     "slug": "quiz-flashcards",
     "privacy": "public",
     "sdkVersion": "31.0.0",
@@ -22,6 +22,9 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.paulooliveira.quizflashcards"
     }
   }
 }
