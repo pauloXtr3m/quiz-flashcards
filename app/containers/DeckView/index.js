@@ -31,7 +31,6 @@ export default class DeckView extends React.Component {
         const {opacity, height} = this.state;
 
         Animated.timing(opacity, {duration: 500, toValue: 1}).start();
-
         Animated.spring(height, {toValue: 40, speed: 3}).start();
     }
 

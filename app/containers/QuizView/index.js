@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Text, View, Alert} from 'react-native';
-import { DeckSwiper, Toast } from 'native-base';
+import {Text, View, Alert, Animated} from 'react-native';
+import {DeckSwiper, Toast} from 'native-base';
 import {FlipCardButton} from './FlipCardButton';
 import {CardsContainer} from './styles';
 import QuizCard from '../../components/QuizCard';
@@ -13,8 +13,6 @@ export default class QuizView extends React.Component {
 
     state = {
         cards: [],
-        cardsSwiped: 0,
-        cardsEnded: false,
     };
 
     componentDidMount() {
@@ -28,17 +26,7 @@ export default class QuizView extends React.Component {
                 this.setState({cards});
             }
         });
-
-        Alert.alert('Tutorial', 'Swipe right to correct, and left to incorrect');
     }
-
-    swipeRight(){
-
-	}
-
-	swipeLeft(){
-
-	}
 
     increaseScore() {
         this.score = this.score + 100;
@@ -46,22 +34,20 @@ export default class QuizView extends React.Component {
     };
 
     showScoreView() {
-		const {deckKey} = this.props.navigation.state.params;
-		const {score, correctQuestions, totalQuestions} = this;
+        const {deckKey} = this.props.navigation.state.params;
+        const {score, correctQuestions, totalQuestions} = this;
 
-		this.props.navigation.navigate(
-			'ScoreView',
-			{deckKey, score, correctQuestions, totalQuestions},
-		)
-	};
+        this.props.navigation.navigate(
+            'ScoreView',
+            {deckKey, score, correctQuestions, totalQuestions},
+        )
+    };
 
     render() {
         const stateCards = this.state.cards;
         const cards = stateCards.length ? ArrayUtils.addPosition(stateCards) : [];
         this.totalQuestions = cards.length;
-
-        const hasCardsEnded = (position) => cards.length === position;
-
+        this.totalSwiped = 0;
 
         if (!stateCards.length) {
             return <View><Text>Loading...</Text></View>
@@ -71,33 +57,41 @@ export default class QuizView extends React.Component {
             <CardsContainer>
                 <View>
                     <DeckSwiper
-						ref={(r) => this._deckSwiper = r}
+                        ref={(r) => this._deckSwiper = r}
                         dataSource={cards}
                         renderItem={item =>
                             <QuizCard {...item} numberOfCards={cards.length} ref={(card) => this._quizCard = card}/>
                         }
-                        onSwipeRight={(item) => {
+                        onSwipeRight={() => {
                             this.increaseScore();
-							if(hasCardsEnded(item.position)){
-								this.showScoreView();
-							} else {
-								this._btnFlip.swipedCard();
-							}
+                            this.totalSwiped = this.totalSwiped + 1;
+                            if (this.totalSwiped === this.totalQuestions) {
+                                this.showScoreView();
+                            } else {
+                                this._btnFlip.swipedCard();
+                            }
                         }}
-                        onSwipeLeft={(item) => {
-                        	if(hasCardsEnded(item.position)){
-								this.showScoreView()
-							} else {
-								this._btnFlip.swipedCard();
-							}
+                        onSwipeLeft={() => {
+                            this.totalSwiped = this.totalSwiped + 1;
+                            if (this.totalSwiped === this.totalQuestions) {
+                                this.showScoreView();
+                            } else {
+                                this._btnFlip.swipedCard();
+                            }
                         }}
                     />
                 </View>
 
                 <FlipCardButton flipCard={() => {this._quizCard.flipCard()}}
-								swipeRight={() => {this._deckSwiper._root.swipeRight()}}
-								swipeLeft={() => {this._deckSwiper._root.swipeLeft()}}
-								ref={(btn) => this._btnFlip = btn}/>
+                                swipeRight={() => {
+                                    this._deckSwiper._root.swipeRight();
+                                    this._deckSwiper.props.onSwipeRight();
+                                }}
+                                swipeLeft={() => {
+                                    this._deckSwiper._root.swipeLeft();
+                                    this._deckSwiper.props.onSwipeLeft();
+                                }}
+                                ref={(btn) => this._btnFlip = btn}/>
             </CardsContainer>
         )
     }
