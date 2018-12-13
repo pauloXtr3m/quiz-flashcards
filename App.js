@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { Root } from 'native-base';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import {View, Text} from 'react-native';
+import {Root} from 'native-base';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 import DeckListView from './app/containers/DecksListView/index';
-import { red, white} from './app/utils/colors';
+import {red, white} from './app/utils/colors';
 import DeckView from './app/containers/DeckView/index';
 import AddDeckView from './app/containers/AddDeckView';
 import AddCardView from "./app/containers/AddCardView";
@@ -28,13 +28,13 @@ export default class App extends React.Component {
 		NotificationUtils.setLocalNotification();
 	}
 
-  render() {
-	if(this.state.fontLoaded){
-        return <Root> <AppContainer /> </Root>
-    }
+	render() {
+		if (this.state.fontLoaded) {
+			return <AppContainer/>
+		}
 
-    return(<View><Text>Loading</Text></View>);
-  }
+		return (<View><Text>Loading</Text></View>);
+	}
 }
 
 const AppNavigator = createStackNavigator({
@@ -65,23 +65,23 @@ const AppNavigator = createStackNavigator({
 			}
 		},
 	},
-    AddCardView: {
-        screen: AddCardView,
-        navigationOptions: {
-            headerTintColor: white,
-            headerStyle: {
-                backgroundColor: red,
-            }
-        },
-    },
+	AddCardView: {
+		screen: AddCardView,
+		navigationOptions: {
+			headerTintColor: white,
+			headerStyle: {
+				backgroundColor: red,
+			}
+		},
+	},
 	QuizView: {
-        screen: QuizView,
-        navigationOptions: {
-            headerTintColor: white,
-            headerStyle: {
-                backgroundColor: red,
-            }
-        },
+		screen: QuizView,
+		navigationOptions: {
+			headerTintColor: white,
+			headerStyle: {
+				backgroundColor: red,
+			}
+		},
 	},
 	ScoreView: {
 		screen: ScoreView,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from 'native-base';
 import {View,Text, StyleSheet} from 'react-native';
-import {blue, white} from '../../utils/colors';
+import {blue, green, red, white} from '../../utils/colors';
 
 export class FlipCardButton extends React.Component {
 	state = {
@@ -21,7 +21,7 @@ export class FlipCardButton extends React.Component {
 
 	render() {
 		let {flipped} = this.state;
-		const {flipCard} = this.props;
+		const {flipCard, swipeRight, swipeLeft} = this.props;
 
 		return (
 			<View>
@@ -32,9 +32,20 @@ export class FlipCardButton extends React.Component {
 				)}
 
 				{flipped && (
-					<Button rounded block bordered onPress={this.updateButtonText(flipCard)}>
-						<Text style={{color: blue}}>Back to question</Text>
-					</Button>
+					<View>
+						<Button rounded block bordered onPress={this.updateButtonText(flipCard)}>
+							<Text style={{color: blue}}>Back to question</Text>
+						</Button>
+						<Button rounded block onPress={swipeRight}
+								style={{backgroundColor: green, marginTop: 40}}>
+							<Text style={{color: white}}>Correct</Text>
+						</Button>
+						<Button rounded block bordered onPress={swipeLeft}
+								style={{backgroundColor: red, marginTop: 24}}>
+							<Text style={{color: white}}>Incorrect</Text>
+						</Button>
+					</View>
+
 				)}
 			</View>
 		)

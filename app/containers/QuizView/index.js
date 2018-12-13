@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Text, View, Alert} from 'react-native';
-import { DeckSwiper } from 'native-base';
+import { DeckSwiper, Toast } from 'native-base';
 import {FlipCardButton} from './FlipCardButton';
 import {CardsContainer} from './styles';
 import QuizCard from '../../components/QuizCard';
@@ -31,6 +31,14 @@ export default class QuizView extends React.Component {
 
         Alert.alert('Tutorial', 'Swipe right to correct, and left to incorrect');
     }
+
+    swipeRight(){
+
+	}
+
+	swipeLeft(){
+
+	}
 
     increaseScore() {
         this.score = this.score + 100;
@@ -63,13 +71,13 @@ export default class QuizView extends React.Component {
             <CardsContainer>
                 <View>
                     <DeckSwiper
+						ref={(r) => this._deckSwiper = r}
                         dataSource={cards}
                         renderItem={item =>
                             <QuizCard {...item} numberOfCards={cards.length} ref={(card) => this._quizCard = card}/>
                         }
                         onSwipeRight={(item) => {
                             this.increaseScore();
-
 							if(hasCardsEnded(item.position)){
 								this.showScoreView();
 							} else {
@@ -86,9 +94,10 @@ export default class QuizView extends React.Component {
                     />
                 </View>
 
-                <FlipCardButton flipCard={() => {
-                    this._quizCard.flipCard()
-                }} ref={(btn) => this._btnFlip = btn}/>
+                <FlipCardButton flipCard={() => {this._quizCard.flipCard()}}
+								swipeRight={() => {this._deckSwiper._root.swipeRight()}}
+								swipeLeft={() => {this._deckSwiper._root.swipeLeft()}}
+								ref={(btn) => this._btnFlip = btn}/>
             </CardsContainer>
         )
     }
