@@ -5,7 +5,7 @@ Readable is the third project of Udacity React Nanodregree. It is a react-native
 
 ## Setup
 
-Install follow these [instructions](https://docs.expo.io/versions/latest/introduction/installation) to install expo
+Follow these [instructions](https://docs.expo.io/versions/latest/introduction/installation) to install expo
 
 In the root path:
 ```
